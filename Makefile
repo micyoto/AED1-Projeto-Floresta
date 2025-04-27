@@ -1,41 +1,37 @@
-// === Makefile ===
-CC       := gcc
-CFLAGS   := -Wall -Wextra -Werror
-LDFLAGS  := -lm
-BUILD    := ./build
-OBJ_DIR  := $(BUILD)/objects
-APP_DIR  := $(BUILD)
-TARGET   := app
-INCLUDE  := -Iinclude/
-SRC      := $(wildcard src/*.c)
-OBJECTS  := $(SRC:src/%.c=$(OBJ_DIR)/%.o)
+# Makefile
 
-all: build $(APP_DIR)/$(TARGET)
+# Nome do executável
+exec = simula
 
-$(OBJ_DIR)/%.o: src/%.c
-	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) $(INCLUDE) -o $@ -c $<
+# Compilador e flags
+CC      = gcc
+CFLAGS  = -Iinclude -Wall -Wextra -std=c11
+LDFLAGS =
 
-$(APP_DIR)/$(TARGET): $(OBJECTS)
-	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) $(INCLUDE) $(LDFLAGS) -o $@ $^
+# Fontes e objetos
+SRCS = src/main.c src/entrada_saida.c src/fogo.c src/animal.c
+OBJS = $(SRCS:.c=.o)
 
-.PHONY: all build clean debug release run
+# Regra padrão: compila tudo
+default: all
 
-build:
-	@mkdir -p $(APP_DIR)
-	@mkdir -p $(OBJ_DIR)
+all: $(exec)
 
-debug: CFLAGS += -DDEBUG -g
-debug: all
+$(exec): $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-release: CFLAGS += -O3
-release: all
+# Regra genérica para .o
+src/%.o: src/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Executa o programa
+run: $(exec)
+	./$(exec)
+
+# Limpeza de artefatos
+authclean: clean
 
 clean:
-	-@rm -rvf $(OBJ_DIR)/*
-	-@rm -rvf $(APP_DIR)/*
+	rm -f $(OBJS) $(exec) output.dat
 
-run:
-	./$(APP_DIR)/$(TARGET)
-
+.PHONY: all run clean default
