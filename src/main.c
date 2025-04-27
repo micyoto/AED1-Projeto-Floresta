@@ -1,4 +1,7 @@
 // === src/main.c ===
+
+#include <stdio.h>
+#include <stdlib.h>
 #include "entrada_saida.h"
 
 int main() {
