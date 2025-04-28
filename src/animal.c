@@ -1,4 +1,4 @@
-// src/animal.c
+// === src/animal.c ===
 #include <stdlib.h>
 #include "animal.h"
 
@@ -12,13 +12,23 @@ static void posicionar_inicial(Floresta *f, Animal *a) {
                 a->vivo = 1;
                 return;
             }
-    // se não achar, mata o bicho
     a->vivo = 0;
 }
 
 Animal* init_animal(Floresta *f) {
     Animal *a = malloc(sizeof(Animal));
     posicionar_inicial(f, a);
+
+    a->passos = 0;
+    a->caminho_capacidade = 1000;
+    a->caminho_tamanho = 0;
+    a->caminho_x = malloc(a->caminho_capacidade * sizeof(int));
+    a->caminho_y = malloc(a->caminho_capacidade * sizeof(int));
+
+    a->caminho_x[a->caminho_tamanho] = a->x;
+    a->caminho_y[a->caminho_tamanho] = a->y;
+    a->caminho_tamanho++;
+
     return a;
 }
 
@@ -28,7 +38,6 @@ void move_animal(Floresta *f, Animal *a) {
     int cx = a->x, cy = a->y;
     int val = f->matriz[cx][cy];
 
-    // se está em água, converte em vazio e regenera árvores ao redor
     if (val == 4) {
         f->matriz[cx][cy] = 0;
         int dx[4] = {-1,1,0,0}, dy[4] = {0,0,-1,1};
@@ -41,13 +50,11 @@ void move_animal(Floresta *f, Animal *a) {
         return;
     }
 
-    // se está em área vazia e ainda pode ficar, incrementa e permanece
     if (val == 0 && a->iteracoes_no_local < 3) {
         a->iteracoes_no_local++;
         return;
     }
 
-    // caso contrário, tenta mover-se para o melhor vizinho
     int dx[4] = {-1,1,0,0}, dy[4] = {0,0,-1,1};
     int best_prio = 0, best_nx = -1, best_ny = -1;
 
@@ -55,10 +62,9 @@ void move_animal(Floresta *f, Animal *a) {
         int nx = cx + dx[k], ny = cy + dy[k];
         if (nx<0||nx>=f->linhas||ny<0||ny>=f->colunas) continue;
         int v = f->matriz[nx][ny], prio = 0;
-        if (v == 4)       prio = 4;
+        if (v == 4) prio = 4;
         else if (v == 0 || v == 1) prio = 3;
-        else if (v == 3)  prio = 2;
-        else if (v == 2)  prio = 0;
+        else if (v == 3) prio = 2;
         if (prio > best_prio) {
             best_prio = prio;
             best_nx = nx;
@@ -66,14 +72,29 @@ void move_animal(Floresta *f, Animal *a) {
         }
     }
 
-    // se não há para onde ir (todas ortogonais em chamas)
     if (best_prio == 0) {
         a->vivo = 0;
         return;
     }
 
-    // move para a melhor posição
     a->x = best_nx;
     a->y = best_ny;
     a->iteracoes_no_local = 0;
+    a->passos++;
+
+    if (a->caminho_tamanho >= a->caminho_capacidade) {
+        a->caminho_capacidade *= 2;
+        a->caminho_x = realloc(a->caminho_x, a->caminho_capacidade * sizeof(int));
+        a->caminho_y = realloc(a->caminho_y, a->caminho_capacidade * sizeof(int));
+    }
+
+    a->caminho_x[a->caminho_tamanho] = a->x;
+    a->caminho_y[a->caminho_tamanho] = a->y;
+    a->caminho_tamanho++;
+}
+
+void liberar_animal(Animal *a) {
+    free(a->caminho_x);
+    free(a->caminho_y);
+    free(a);
 }

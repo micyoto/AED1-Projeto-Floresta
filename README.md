@@ -4,6 +4,26 @@ Trabalho de Aquecimento da disciplina de Algoritmos e Estruturas de Dados 1. O t
 
 ---
 
+## Resumo
+
+O objetivo é mostrar como o fogo se espalha e como o animal tenta escapar. A simulação é automática e ajuda a entender o comportamento do fogo e as dificuldades de encontrar segurança em um ambiente em chamas.
+
+---
+
+## Como Funciona
+
+- A floresta é representada como uma grande tabela, onde cada quadradinho pode ter árvores, fogo, água ou estar vazio.
+- O fogo começa em um ponto inicial e se espalha para os lados (cima, baixo, esquerda, direita) conforme o passar do tempo.
+- Um animal é colocado no primeiro espaço vazio que encontrar e tenta se mover para longe do fogo, preferindo ir para a água quando possível.
+- O animal pode ficar parado por algumas rodadas em um lugar seguro, mas depois precisa continuar se movendo.
+- A simulação termina quando o fogo não pode mais se espalhar ou após todas as rodadas serem simuladas de acordo com o config.h.
+
+Durante a execução:
+- O estado da floresta é salvo em um arquivo a cada rodada.
+- No final, é mostrado se o animal sobreviveu, quantos passos deu e por onde passou.
+
+---
+
 ## Características Principais
 
 - **Leitura e escrita de arquivos** via módulo de entrada/saída (`entrada_saida.c` / `entrada_saida.h`).
@@ -53,7 +73,7 @@ O executável gerado chama-se `simula` e irá ler `input.dat`, rodar até o fogo
 ## Estrutura de Arquivos
 
 ```
-seu_projeto/
+TrabFloresta/
 ├── Makefile
 ├── output.dat         # gerado a cada execução
 ├── input.dat          # arquivo de entrada (mapa inicial)
@@ -96,13 +116,13 @@ seu_projeto/
      - Propaga o fogo.
      - Grava estado.
      - Interrompe se o fogo não se espalhar mais.
-  4. Exibe matriz final e condição do animal.
+  4. Exibe matriz final, a condição e o caminho percorrido pelo animal.
 
 ---
 
 ## Observações
 
-Este projeto foi testado e executado em Windows 11 com WSL Ubuntu, utilizando o terminal integrado do VSCode. Não foram necessários ajustes adicionais para rodar em sistemas Linux nativos.
+Este projeto foi testado e executado em Windows 11 com WSL Ubuntu, utilizando o terminal integrado do VSCode. 
 
 > **Autor:** Michael Yoshiaki Todoroki
 > **Data:** 20 de Abril de 2025
