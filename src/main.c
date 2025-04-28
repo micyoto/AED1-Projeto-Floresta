@@ -1,4 +1,5 @@
 // === src/main.c ===
+// === versão final ===
 #include <stdio.h>
 #include <stdlib.h>
 #include "config.h"

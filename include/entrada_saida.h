@@ -1,5 +1,5 @@
-
 // === include/entrada_saida.h ===
+// === versão final ===
 #ifndef ENTRADA_SAIDA_H
 #define ENTRADA_SAIDA_H
 

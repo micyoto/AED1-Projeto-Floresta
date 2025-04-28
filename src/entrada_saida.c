@@ -1,4 +1,5 @@
 // === src/entrada_saida.c ===
+// === versão final ===
 #include <stdio.h>
 #include <stdlib.h>
 #include "entrada_saida.h"

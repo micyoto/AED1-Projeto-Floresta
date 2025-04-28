@@ -1,4 +1,5 @@
 // include/config.h
+// === versão final ===
 #ifndef CONFIG_H
 #define CONFIG_H
 

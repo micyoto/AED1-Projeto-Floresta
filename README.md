@@ -1,4 +1,4 @@
-# AED1-Trabalho-de-Aquecimento: Simulador de Propagação de Incêndios e Fuga de Animal
+# AED1-Trabalho-de-Aquecimento: Simulador de Propagação de Incêndios e Fuga de Animal - Versão final
 
 Trabalho de Aquecimento da disciplina de Algoritmos e Estruturas de Dados 1. O trabalho consiste em simular um incêndio em uma floresta representada por uma matriz, com propagação controlada por configurações de vento e número máximo de iterações, e inclui também a lógica de movimentação de um animal que tenta escapar das chamas.
 

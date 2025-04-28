@@ -1,4 +1,5 @@
 // include/fogo.h
+// === versão final ===
 #ifndef FOGO_H
 #define FOGO_H
 

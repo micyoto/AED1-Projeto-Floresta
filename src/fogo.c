@@ -1,4 +1,5 @@
 // src/fogo.c
+// === versão final ===
 #include <stdlib.h>
 #include "fogo.h"
 #include "config.h"
